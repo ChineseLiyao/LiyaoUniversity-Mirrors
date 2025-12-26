@@ -7,12 +7,14 @@
     <nav class="mb-8 text-sm">
         <a href="/" class="text-gray-400 hover:text-gray-900">&larr; Back to Mirrors</a>
     </nav>
-    
-    <article class="prose prose-slate max-w-none 
-        prose-headings:tracking-tight prose-headings:font-bold
-        prose-code:bg-gray-100 prose-code:px-1 prose-code:rounded
-        prose-pre:bg-gray-900 prose-pre:text-gray-100 prose-pre:p-4 prose-pre:rounded-lg">
-        {{ content | safe }}
+    <article class="max-w-4xl mx-auto py-10">
+        <div class="prose prose-slate max-w-none 
+                    prose-headings:text-gray-900 
+                    prose-a:text-blue-600 hover:prose-a:text-blue-500
+                    prose-code:text-pink-600 prose-code:bg-gray-50 prose-code:px-1 prose-code:rounded
+                    prose-pre:bg-gray-900 prose-pre:shadow-lg">
+            {{ content | safe }}
+        </div>
     </article>
 </section>
 {% endblock %}

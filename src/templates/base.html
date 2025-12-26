@@ -3,9 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}LiyaoUniversity Mirrors{% endblock %}</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>{% block title %}Liyao University Mirrors{% endblock %}</title>
     <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            typography: {
+              DEFAULT: {
+                css: {
+                  'code::before': { content: '""' },
+                  'code::after': { content: '""' },
+                  'code': {
+                    color: '#be185d',
+                    backgroundColor: '#f3f4f6',
+                    padding: '0.2rem 0.4rem',
+                    borderRadius: '0.25rem',
+                    fontWeight: '500',
+                  },
+                  'pre': {
+                    backgroundColor: '#1e293b',
+                    color: '#e2e8f0',
+                    borderRadius: '0.5rem',
+                    padding: '1.25rem',
+                    boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+                    overflowX: 'auto',
+                  },
+                  
+                  'pre code': {
+                    backgroundColor: 'transparent',
+                    padding: '0',
+                    color: 'inherit',
+                    fontSize: '0.875rem',
+                  },
+                  'pre::-webkit-scrollbar': {
+                    height: '8px',
+                  },
+                  'pre::-webkit-scrollbar-thumb': {
+                    backgroundColor: '#475569',
+                    borderRadius: '10px',
+                  },
+                  'pre::-webkit-scrollbar-track': {
+                    backgroundColor: 'transparent',
+                  },
+                },
+              },
+            },
+          },
+        },
+      }
+    </script>
     <style>
         body { font-family: 'Inter', -apple-system, system-ui, sans-serif; }
         .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
@@ -15,10 +62,6 @@
     <nav class="border-b border-gray-100 py-4 px-6 mb-8">
         <div class="max-w-5xl mx-auto flex justify-between items-center">
             <a href="/" class="text-xl font-bold tracking-tight">LIYAO<span class="text-gray-400">UNIVERSITY</span> MIRRORS</a>
-            <div class="text-sm space-x-6">
-                <a href="https://liyao.edu.kg" class="hover:text-gray-500">Blog</a>
-                <a href="https://github.com/liyaoyuan" class="hover:text-gray-500">GitHub</a>
-            </div>
         </div>
     </nav>
 
@@ -27,7 +70,7 @@
     </main>
 
     <footer class="max-w-5xl mx-auto px-6 mt-20 py-8 border-t border-gray-50 text-xs text-gray-400 mono">
-        <p>System: LiyaoUniversity Mirror Core 1.0.0</p>
+        <p>LiyaoUniversity Mirror</p>
         <p class="mt-1">Generated at {{ g.now if g.now else '2025-12-27' }}</p>
     </footer>
 </body>
