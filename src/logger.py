@@ -1,7 +1,6 @@
 import logging
 import sys
 
-# 配置标准日志格式
 logging.basicConfig(
     level=logging.INFO,
     format='[%(asctime)s] [%(levelname)s] %(message)s',
@@ -21,5 +20,9 @@ class Logger:
     @staticmethod
     def success(module, message):
         logging.info(f"[{module}] SUCCESS: {message}")
+
+    @staticmethod
+    def warning(module, message):
+        logging.warning(f"[{module}] {message}")
 
 logger = Logger()

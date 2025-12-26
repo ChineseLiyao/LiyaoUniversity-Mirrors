@@ -1,5 +1,5 @@
-from flask import Blueprint, request, current_app
-from ..utils import stream_proxy
+from flask import Blueprint, request, current_app, render_template
+from ..utils import stream_proxy, render_markdown
 from ..logger import logger
 import itertools
 
@@ -10,17 +10,20 @@ UBUNTU_UPSTREAMS = [
     "https://mirrors.tuna.tsinghua.edu.cn/ubuntu/",
     "https://mirrors.ustc.edu.cn/ubuntu/",
     "https://mirrors.aliyun.com/ubuntu/",
-    "http://archive.ubuntu.com/ubuntu/" # 官方兜底源
+    "http://archive.ubuntu.com/ubuntu/"
 ]
 
 # 2. 创建无限循环迭代器实现轮询
 upstream_cycle = itertools.cycle(UBUNTU_UPSTREAMS)
 
+@ubuntu_bp.route('/help')
+def help():
+    md_content = render_markdown('ubuntu')
+    return render_template('help_page.html', title="Ubuntu", content=md_content)
+
 @ubuntu_bp.route('/')
 @ubuntu_bp.route('/<path:path>')
 def proxy(path=""):
-    # 获取当前轮询的上游
-    
     attempts = 0
     max_attempts = len(UBUNTU_UPSTREAMS)
     
@@ -28,19 +31,17 @@ def proxy(path=""):
         base_url = next(upstream_cycle)
         target_url = f"{base_url}{path}"
         
-        logger.info("UBUNTU", f"Polling attempt {attempts + 1}: {target_url}")
-        
         try:
-            # 执行流式代理
-            # 我们需要检查上游的状态码，如果 404 或 5xx 则尝试下一个源
-            # 这里对 stream_proxy 进行微调，传入检测逻辑
-            return perform_ubuntu_proxy(target_url)
+            # 这里的 headers 应该来自原始请求，比如客户端执行 apt 时带的 Range
+            client_headers = {k: v for k, v in request.headers if k.lower() in ['range']}
+            return stream_proxy(target_url, headers=client_headers)
         except Exception as e:
-            logger.error("UBUNTU", f"Source {base_url} failed: {str(e)}")
+            # 当返回 403 时，会触发这里的切换逻辑
+            logger.warning("UBUNTU", f"Attempt {attempts + 1} failed: {target_url} (Error: {str(e)})")
             attempts += 1
             continue
 
-    return "All upstreams failed", 502
+    return "All upstreams denied access or are offline", 502
 
 def perform_ubuntu_proxy(url):
     """

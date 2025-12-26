@@ -3,6 +3,10 @@ from .core.pypi import pypi_bp
 from .logger import logger
 from .core.ubuntu import ubuntu_bp
 
+app = Flask(__name__)
+app.register_blueprint(pypi_bp)
+app.register_blueprint(ubuntu_bp)
+
 MIRRORS_CONFIG = [
     {
         "name": "PyPI", 
@@ -16,14 +20,9 @@ MIRRORS_CONFIG = [
         "index_path": "/ubuntu/", 
         "help_path": "/ubuntu/help", 
         "desc": "多源轮询高速镜像代理", 
-        "status": "Polling"
+        "status": "Online"
     }
 ]
-
-app = Flask(__name__)
-app.register_blueprint(pypi_bp)
-app.register_blueprint(ubuntu_bp)
-
 
 @app.get('/')
 def index():
