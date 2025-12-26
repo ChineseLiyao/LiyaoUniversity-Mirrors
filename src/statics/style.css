@@ -1,0 +1,29 @@
+body {
+    font-family: 'Inter', -apple-system, system-ui, sans-serif;
+}
+
+.mono {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.prose pre code {
+    background-color: transparent !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    color: #e2e8f0 !important;
+    border: none !important;
+}
+
+.prose pre code::before,
+.prose pre code::after {
+    content: none !important;
+}
+
+.prose pre::-webkit-scrollbar {
+    height: 4px;
+}
+
+.prose pre::-webkit-scrollbar-thumb {
+    background-color: #475569;
+    border-radius: 10px;
+}

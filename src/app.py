@@ -6,8 +6,20 @@ app = Flask(__name__)
 app.register_blueprint(pypi_bp)
 
 MIRRORS_CONFIG = [
-    {"name": "PyPI", "path": "/pypi/simple/", "desc": "Python Package Index 代理", "status": "Online"},
-    {"name": "Ubuntu", "path": "/ubuntu/", "desc": "Ubuntu 代理", "status": "Planned"}
+    {
+        "name": "PyPI",
+        "index_path": "/pypi/simple/",
+        "help_path": "/pypi/help",
+        "desc": "Python Package Index 代理",
+        "status": "Online"
+    },
+    {
+        "name": "Ubuntu",
+        "index_path": "/ubuntu/",
+        "help_path": "/ubuntu/help",
+        "desc": "Ubuntu Archive 代理 (待开发)",
+        "status": "Planned"
+    }
 ]
 
 @app.get('/')
