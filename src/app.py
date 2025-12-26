@@ -1,26 +1,29 @@
 from flask import Flask, render_template
 from .core.pypi import pypi_bp
 from .logger import logger
-
-app = Flask(__name__)
-app.register_blueprint(pypi_bp)
+from .core.ubuntu import ubuntu_bp
 
 MIRRORS_CONFIG = [
     {
-        "name": "PyPI",
-        "index_path": "/pypi/simple/",
-        "help_path": "/pypi/help",
-        "desc": "Python Package Index 代理",
+        "name": "PyPI", 
+        "index_path": "/pypi/simple/", 
+        "help_path": "/pypi/help", 
+        "desc": "Python Package Index 智能流式代理", 
         "status": "Online"
     },
     {
-        "name": "Ubuntu",
-        "index_path": "/ubuntu/",
-        "help_path": "/ubuntu/help",
-        "desc": "Ubuntu Archive 代理 (待开发)",
-        "status": "Planned"
+        "name": "Ubuntu", 
+        "index_path": "/ubuntu/", 
+        "help_path": "/ubuntu/help", 
+        "desc": "多源轮询高速镜像代理", 
+        "status": "Polling"
     }
 ]
+
+app = Flask(__name__)
+app.register_blueprint(pypi_bp)
+app.register_blueprint(ubuntu_bp)
+
 
 @app.get('/')
 def index():
