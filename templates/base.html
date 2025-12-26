@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}LiyaoUniversity Mirrors{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Inter', -apple-system, system-ui, sans-serif; }
+        .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    </style>
+</head>
+<body class="bg-white text-gray-900 antialiased">
+    <nav class="border-b border-gray-100 py-4 px-6 mb-8">
+        <div class="max-w-5xl mx-auto flex justify-between items-center">
+            <a href="/" class="text-xl font-bold tracking-tight">LIYAO<span class="text-gray-400">UNIVERSITY</span> MIRRORS</a>
+            <div class="text-sm space-x-6">
+                <a href="https://liyao.edu.kg" class="hover:text-gray-500">Blog</a>
+                <a href="https://github.com/liyaoyuan" class="hover:text-gray-500">GitHub</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-5xl mx-auto px-6">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="max-w-5xl mx-auto px-6 mt-20 py-8 border-t border-gray-50 text-xs text-gray-400 mono">
+        <p>System: LiyaoUniversity Mirror Core 1.0.0</p>
+        <p class="mt-1">Generated at {{ g.now if g.now else '2025-12-27' }}</p>
+    </footer>
+</body>
+</html>

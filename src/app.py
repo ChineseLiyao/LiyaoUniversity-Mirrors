@@ -1,0 +1,24 @@
+from flask import Flask, render_template
+from .core.pypi import pypi_bp
+from .logger import logger
+
+app = Flask(__name__)
+app.register_blueprint(pypi_bp)
+
+MIRRORS_CONFIG = [
+    {"name": "PyPI", "path": "/pypi/simple/", "desc": "Python Package Index 代理", "status": "Online"},
+    {"name": "Ubuntu", "path": "/ubuntu/", "desc": "Ubuntu 代理", "status": "Planned"}
+]
+
+@app.get('/')
+def index():
+    return render_template('index.html', mirrors=MIRRORS_CONFIG)
+
+# 在 pypi.py 中增加一个帮助页面路由
+@pypi_bp.route('/help')
+def help():
+    return render_template('pypi_help.html')
+
+if __name__ == '__main__':
+    logger.success("SYSTEM", "LiyaoUniversity Mirror Cluster Started")
+    app.run(host='0.0.0.0', port=5000, debug=True)
