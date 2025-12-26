@@ -4,11 +4,8 @@
 
 ## 特性
 
-- **零存储成本**：无需购买昂贵的大容量硬盘，通过上游源实时转发数据。
-- **流式传输 (Streaming)**：采用 `chunked` 传输编码，支持超大 ISO 文件分发，内存占用极低。
-- **链接重写**：针对 PyPI 等 Index 协议，自动重写 HTML 内的绝对路径，确保客户端下载链路完整闭环。
-- **模块化架构**：基于 Flask Blueprint 设计，可轻松扩展 Ubuntu, NPM, PyPI, Docker 等多种镜像环境。
-- **工业级日志**：标准格式化日志输出，方便部署于容器环境或进行系统级监控。
+- **流式传输 (Streaming)**：采用 `chunked` 传输编码，支持超大 ISO 文件分发，内存占用低。
+- **链接重写**：针对 PyPI 等 Index 协议，自动重写 HTML 内的绝对路径。
 
 ## 技术栈
 
@@ -17,25 +14,6 @@
 - **HTTP Client:** Requests (with Stream support)
 - **UI:** Tailwind CSS & Jinja2
 - **Server:** Gunicorn (Recommended for Production)
-
-## 目录结构
-
-```text
-liyao-mirrors/
-├── src/
-│   ├── app.py             # 核心入口
-│   ├── logger.py          # 标准化日志模块
-│   ├── utils.py           # 通用流式处理工具
-│   └── core/
-│       ├── pypi.py        # PyPI 镜像蓝图
-│       └── ubuntu.py      # Ubuntu 镜像蓝图 (Development)
-├── templates/
-│   ├── base.html          # 响应式基础模板
-│   └── index.html         # 镜像站首页
-├── .gitignore             # 排除环境与缓存
-├── requirements.txt       # 项目依赖
-└── README.md              # 项目文档
-```
 
 ## 快速开始
 
@@ -108,4 +86,3 @@ pip config set global.index-url http://localhost:5000/pypi/simple/
 ---
 
 **LiyaoUniversity Mirrors** &copy; 2025
-Designed for efficiency and logic.
