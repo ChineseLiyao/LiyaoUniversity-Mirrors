@@ -1,6 +1,6 @@
 # LiyaoUniversity Mirrors
 
-一个基于 Flask 构建的高性能、智能流式开源镜像代理服务。与传统的通过 `rsync` 全量同步数百 GB 数据的镜像站不同，本项目采用 **代理分发 (Pull-through Cache/Proxy)** 模式，实现按需拉取、零存储占用。
+一个基于 Flask 构建的高性能、流式开源镜像代理服务。与传统的通过 `rsync` 全量同步数百 GB 数据的镜像站不同，本项目采用 **代理分发 (Pull-through Cache/Proxy)** 模式，实现按需拉取、零存储占用。
 
 ## 特性
 
