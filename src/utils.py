@@ -3,6 +3,27 @@ import requests
 from flask import Response, stream_with_context
 from .logger import logger
 
+def stream_proxy(url):
+    """
+    针对二进制文件的透明流式代理
+    """
+    req = requests.get(url, stream=True, allow_redirects=True)
+    
+    @stream_with_context
+    def generate():
+        # 二进制文件使用 iter_content
+        for chunk in req.iter_content(chunk_size=256 * 1024): # 256KB 缓冲
+            yield chunk
+
+    response = Response(generate(), status=req.status_code)
+    
+    # 转发关键头
+    for key in ['Content-Type', 'Content-Length', 'Accept-Ranges']:
+        if key in req.headers:
+            response.headers[key] = req.headers[key]
+            
+    return response
+
 def stream_and_replace(url, pattern, replacement, headers=None):
     """
     流式获取内容并实时进行正则替换
