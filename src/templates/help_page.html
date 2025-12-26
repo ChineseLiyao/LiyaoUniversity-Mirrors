@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }} - 使用帮助 - LiyaoUniversity Mirrors{% endblock %}
+
+{% block content %}
+<section class="max-w-3xl mx-auto">
+    <nav class="mb-8 text-sm">
+        <a href="/" class="text-gray-400 hover:text-gray-900">&larr; Back to Mirrors</a>
+    </nav>
+    
+    <article class="prose prose-slate max-w-none 
+        prose-headings:tracking-tight prose-headings:font-bold
+        prose-code:bg-gray-100 prose-code:px-1 prose-code:rounded
+        prose-pre:bg-gray-900 prose-pre:text-gray-100 prose-pre:p-4 prose-pre:rounded-lg">
+        {{ content | safe }}
+    </article>
+</section>
+{% endblock %}

@@ -1,5 +1,5 @@
-from flask import Blueprint, request
-from ..utils import stream_proxy, stream_and_replace
+from flask import Blueprint, request, render_template
+from ..utils import stream_proxy, stream_and_replace, render_markdown, stream_proxy, stream_and_replace
 from ..logger import logger
 
 pypi_bp = Blueprint('pypi', __name__, url_prefix='/pypi')
@@ -7,6 +7,12 @@ pypi_bp = Blueprint('pypi', __name__, url_prefix='/pypi')
 # 上游配置
 PYPI_INDEX_URL = "https://pypi.org/simple/"
 PYPI_FILE_URL = "https://files.pythonhosted.org/packages/"
+
+@pypi_bp.route('/help')
+def help():
+    # 调用解析工具读取 docs/pypi.md
+    md_content = render_markdown('pypi')
+    return render_template('help_page.html', title="PyPI", content=md_content)
 
 @pypi_bp.route('/simple/')
 @pypi_bp.route('/simple/<path:path>')

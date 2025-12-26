@@ -1,8 +1,26 @@
 import re
 import requests
-from flask import Response, stream_with_context
+from flask import Response, stream_with_context, abort
 from .logger import logger
+import markdown
+import os
 
+def render_markdown(filename):
+    """
+    读取并解析 Markdown 文件为 HTML
+    """
+    # 获取项目根目录下的 docs 文件夹路径
+    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    file_path = os.path.join(base_dir, 'docs', f"{filename}.md")
+    
+    if not os.path.exists(file_path):
+        abort(404)
+        
+    with open(file_path, 'r', encoding='utf-8') as f:
+        text = f.read()
+        # 启用 codehilite (代码高亮) 和 tables 扩展
+        return markdown.markdown(text, extensions=['fenced_code', 'tables'])
+    
 def stream_proxy(url):
     """
     针对二进制文件的透明流式代理
