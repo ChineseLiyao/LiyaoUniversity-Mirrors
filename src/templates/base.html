@@ -6,52 +6,58 @@
     <title>{% block title %}Liyao University Mirrors{% endblock %}</title>
     <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
     <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            typography: {
-              DEFAULT: {
-                css: {
-                  'code::before': { content: '""' },
-                  'code::after': { content: '""' },
-                  'code': {
-                    color: '#be185d',
-                    backgroundColor: '#f3f4f6',
-                    padding: '0.2rem 0.4rem',
-                    borderRadius: '0.25rem',
-                    fontWeight: '500',
-                  },
-                  'pre': {
-                    backgroundColor: '#1e293b',
-                    color: '#e2e8f0',
-                    borderRadius: '0.5rem',
-                    padding: '1.25rem',
-                    boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
-                    overflowX: 'auto',
-                  },
-                  
-                  'pre code': {
-                    backgroundColor: 'transparent',
-                    padding: '0',
-                    color: 'inherit',
-                    fontSize: '0.875rem',
-                  },
-                  'pre::-webkit-scrollbar': {
-                    height: '8px',
-                  },
-                  'pre::-webkit-scrollbar-thumb': {
-                    backgroundColor: '#475569',
-                    borderRadius: '10px',
-                  },
-                  'pre::-webkit-scrollbar-track': {
-                    backgroundColor: 'transparent',
-                  },
-                },
-              },
+tailwind.config = {
+  theme: {
+    extend: {
+      typography: {
+        DEFAULT: {
+          css: {
+            'code': {
+              color: '#be185d',
+              backgroundColor: '#f3f4f6',
+              padding: '0.2rem 0.4rem',
+              borderRadius: '0.25rem',
+              fontWeight: '500',
+            },
+            'code::before': { content: '""' },
+            'code::after': { content: '""' },
+
+            'pre': {
+              backgroundColor: '#0f172a',
+              color: '#e2e8f0',
+              padding: '1.25rem',
+              borderRadius: '0.75rem',
+              overflowX: 'auto',
+              border: '1px solid #1e293b',
+            },
+
+            'pre code': {
+              backgroundColor: 'transparent',
+              padding: '0',            
+              borderRadius: '0',         
+              color: 'inherit',
+              fontSize: '0.9rem',
+              fontWeight: '400',
+            },
+            'pre code::before': { content: 'none' },
+            'pre code::after': { content: 'none' },
+
+            'pre::-webkit-scrollbar': {
+              height: '5px',
+            },
+            'pre::-webkit-scrollbar-thumb': {
+              backgroundColor: '#334155',
+              borderRadius: '10px',
+            },
+            'pre::-webkit-scrollbar-track': {
+              backgroundColor: 'transparent',
             },
           },
         },
-      }
+      },
+    },
+  },
+}
     </script>
     <style>
         body { font-family: 'Inter', -apple-system, system-ui, sans-serif; }
