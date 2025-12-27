@@ -15,7 +15,6 @@ sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
 编辑 `/etc/apt/sources.list`，将 `archive.ubuntu.com` 和 `security.ubuntu.com` 替换为本站地址：
 
 ```text
-# 默认使用智能代理路径
 deb https://mirrors.liyao.edu.kg/ubuntu/ jammy main restricted universe multiverse
 deb https://mirrors.liyao.edu.kg/ubuntu/ jammy-updates main restricted universe multiverse
 deb https://mirrors.liyao.edu.kg/ubuntu/ jammy-backports main restricted universe multiverse
