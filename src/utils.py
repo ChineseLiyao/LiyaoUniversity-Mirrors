@@ -28,33 +28,36 @@ def render_markdown(filename):
         return markdown.markdown(text, extensions=['fenced_code', 'tables'])
 
 def stream_proxy(url, headers=None):
-    # 合并传入的 headers (如 Range) 与默认的浏览器伪装头
     req_headers = DEFAULT_HEADERS.copy()
     if headers:
         req_headers.update(headers)
+    req_headers['Accept-Encoding'] = 'identity'
 
-    # 发起请求
-    req = requests.get(url, stream=True, allow_redirects=True, headers=req_headers, timeout=10)
-    
-    # 如果上游返回 403/404/5xx，直接抛出异常，让 Ubuntu 的轮询逻辑能够捕获并切换上游
-    if req.status_code >= 400:
-        logger.error("UTILS", f"Upstream returned {req.status_code} for {url}")
-        req.raise_for_status()
+    try:
+        req = requests.get(url, stream=True, allow_redirects=True, headers=req_headers, timeout=10)
+        
+        if req.status_code >= 400:
+            logger.error("UTILS", f"Upstream {req.status_code} for {url}")
+            req.raise_for_status()
 
-    @stream_with_context
-    def generate():
-        for chunk in req.iter_content(chunk_size=256 * 1024):
-            yield chunk
+        @stream_with_context
+        def generate():
+            for chunk in req.iter_content(chunk_size=512 * 1024):
+                yield chunk
 
-    response = Response(generate(), status=req.status_code)
-    
-    # 转发关键响应头
-    for key in ['Content-Type', 'Content-Length', 'Accept-Ranges', 'Content-Range']:
-        if key in req.headers:
-            response.headers[key] = req.headers[key]
-    
-    response.headers['Cache-Control'] = 's-maxage=3600, stale-while-revalidate=60'
-    return response
+        response = Response(generate(), status=req.status_code)
+        
+        for key in ['Content-Type', 'Content-Length', 'Accept-Ranges', 'Content-Range']:
+            if key in req.headers:
+                response.headers[key] = req.headers[key]
+        response.headers.pop('Content-Encoding', None)
+        
+        response.headers['Cache-Control'] = 's-maxage=3600, stale-while-revalidate=60'
+        return response
+
+    except Exception as e:
+        logger.error("UTILS", f"Proxy failed: {str(e)}")
+        raise
 
 def stream_and_replace(url, pattern, replacement, headers=None):
     """
