@@ -1,11 +1,16 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, g
 from .core.pypi import pypi_bp
 from .logger import logger
 from .core.ubuntu import ubuntu_bp
+from datetime import datetime
 
 app = Flask(__name__)
 app.register_blueprint(pypi_bp)
 app.register_blueprint(ubuntu_bp)
+
+@app.before_request
+def before_request():
+    g.now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 MIRRORS_CONFIG = [
     {

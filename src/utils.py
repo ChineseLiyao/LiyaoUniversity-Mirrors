@@ -52,7 +52,8 @@ def stream_proxy(url, headers=None):
     for key in ['Content-Type', 'Content-Length', 'Accept-Ranges', 'Content-Range']:
         if key in req.headers:
             response.headers[key] = req.headers[key]
-            
+    
+    response.headers['Cache-Control'] = 's-maxage=3600, stale-while-revalidate=60'
     return response
 
 def stream_and_replace(url, pattern, replacement, headers=None):
@@ -85,7 +86,8 @@ def stream_and_replace(url, pattern, replacement, headers=None):
                 response.headers[key] = req.headers[key]
         
         response.headers.pop('Content-Length', None)
-        
+
+        response.headers['Cache-Control'] = 's-maxage=3600, stale-while-revalidate=60'
         return response
 
     except Exception as e:
