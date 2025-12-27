@@ -5,6 +5,12 @@ from .core.ubuntu import ubuntu_bp
 from datetime import datetime
 
 app = Flask(__name__)
+
+@pypi_bp.route('/help')
+def help():
+    return render_template('pypi_help.html')
+
+
 app.register_blueprint(pypi_bp)
 app.register_blueprint(ubuntu_bp)
 
@@ -32,11 +38,6 @@ MIRRORS_CONFIG = [
 @app.get('/')
 def index():
     return render_template('index.html', mirrors=MIRRORS_CONFIG)
-
-# 在 pypi.py 中增加一个帮助页面路由
-@pypi_bp.route('/help')
-def help():
-    return render_template('pypi_help.html')
 
 if __name__ == '__main__':
     logger.success("SYSTEM", "LiyaoUniversity Mirror Cluster Started")
