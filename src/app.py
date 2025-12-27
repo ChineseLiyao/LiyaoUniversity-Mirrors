@@ -6,11 +6,6 @@ from datetime import datetime
 
 app = Flask(__name__)
 
-@pypi_bp.route('/help')
-def help():
-    return render_template('pypi_help.html')
-
-
 app.register_blueprint(pypi_bp)
 app.register_blueprint(ubuntu_bp)
 
