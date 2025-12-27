@@ -18,14 +18,14 @@ MIRRORS_CONFIG = [
         "name": "PyPI", 
         "index_path": "/pypi/simple/", 
         "help_path": "/pypi/help", 
-        "desc": "Python Package Index 智能流式代理", 
+        "desc": "Python Package Index 流式代理", 
         "status": "Online"
     },
     {
         "name": "Ubuntu", 
         "index_path": "/ubuntu/", 
         "help_path": "/ubuntu/help", 
-        "desc": "多源轮询高速镜像代理", 
+        "desc": "Ubuntu 镜像代理", 
         "status": "Online"
     }
 ]
